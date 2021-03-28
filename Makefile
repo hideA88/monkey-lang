@@ -8,3 +8,6 @@ clean:
 
 build: deps
 	go build ./...
+
+test:
+	go test ./...
