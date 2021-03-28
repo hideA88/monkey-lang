@@ -1,16 +1,18 @@
+export PATH := $(CURDIR)/.bin:$(PATH)
+
 TARGETS = monkey-lang
+TEST =  ./...
+
+default: setup
 
 setup:
-	go get github.com/Songmu/make2help/cmd/make2help
-	go get github.com/kyoh86/richgo
-deps:
-	go get ./...
+	GOBIN=$(CURDIR)/.bin $(MAKE) -C tools
 
 clean:
 	rm -rf $(TARGETS)
 
-build: deps
+build: setup
 	go build ./...
 
-test:
-	richgo test -v ./...
+test: setup
+	richgo test -v $(TEST)
