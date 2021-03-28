@@ -48,3 +48,13 @@ type Token struct {
 	Type    TokenType
 	Literal string
 }
+
+func NewToken(tokenType TokenType, ch byte) Token {
+	var l string
+	if ch == 0 {
+		l = "EOF"
+	} else {
+		l = string(ch)
+	}
+	return Token{Type: tokenType, Literal: l}
+}
