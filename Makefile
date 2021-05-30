@@ -14,6 +14,9 @@ defualt: help
 ## Install dependency tidy
 tidy: deps.tidy tools.tidy
 
+## Install dependency and tools
+setup: tools
+
 ## Install dependency
 deps:
 	go get ./...
@@ -46,15 +49,15 @@ $(TARGETS): deps
 	go build $(LDFLAGS) ./cmd/$@
 
 ## Check code format
-check: tools
+check:
 	$(GOLANGCI_LINT) ./...
 
 ## Fix code
-fix: tools
+fix:
 	$(GOLANGCI_LINT) --fix ./...
 
 ## Run test
-test: deps tools
+test:
 	mkdir -p tmp
 	richgo test -race -coverprofile=tmp/coverage.txt -covermode=atomic $(TEST)
 
