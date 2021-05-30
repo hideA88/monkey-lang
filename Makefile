@@ -26,8 +26,9 @@ deps.tidy:
 
 ## Install tools
 tools:
-	go install github.com/Songmu/make2help/cmd/make2help@v0.2.0
-	go install github.com/kyoh86/richgo@v0.3.6
+	export GOBIN=$(CURDIR)/.bin &&\
+	go install github.com/Songmu/make2help/cmd/make2help@v0.2.0 &&\
+	go install github.com/kyoh86/richgo@v0.3.6 &&\
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.40.1
 
 ## Remove build target
