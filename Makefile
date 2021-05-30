@@ -9,13 +9,10 @@ GIT_COMMIT = $(shell git rev-parse HEAD)
 LDFLAGS = -ldflags "-X $(PKGNAME)/pkg/version.gitCommit=$(GIT_COMMIT)"
 
 # command
-defualt: help
-
-## Install dependency tidy
-tidy: deps.tidy tools.tidy
+defualt: tools help
 
 ## Install dependency and tools
-setup: tools
+setup: deps tools
 
 ## Install dependency
 deps:
@@ -28,12 +25,10 @@ deps.tidy:
 	go mod tidy
 
 ## Install tools
-tools: deps
-	GOBIN=$(CURDIR)/.bin $(MAKE) -C tools
-tools.update:
-	GOBIN=$(CURDIR)/.bin $(MAKE) -C tools update
-tools.tidy:
-	GOBIN=$(CURDIR)/.bin $(MAKE) -C tools tidy
+tools:
+	go install github.com/Songmu/make2help/cmd/make2help@v0.2.0
+	go install github.com/kyoh86/richgo@v0.3.6
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.40.1
 
 ## Remove build target
 clean:
