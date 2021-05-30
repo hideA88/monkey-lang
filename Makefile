@@ -11,8 +11,11 @@ setup:
 clean:
 	rm -rf $(TARGETS)
 
-build: setup
+build:
 	go build ./...
 
 test: setup
 	richgo test -v $(TEST)
+
+run: build
+	go run ./...
