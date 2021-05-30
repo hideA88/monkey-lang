@@ -64,7 +64,6 @@ func (l *Lexer) NextToken() *token.Token {
 	case '>':
 		tok = token.NewToken(token.GT, '>')
 
-
 	case 0:
 		tok = token.NewToken(token.EOF, 0)
 	default:
@@ -72,7 +71,7 @@ func (l *Lexer) NextToken() *token.Token {
 			tok.Literal = l.readIdentifier()
 			tok.Type = token.LookupIdent(tok.Literal)
 			return &tok
-		} else if isDigit(l.ch){
+		} else if isDigit(l.ch) {
 			tok.Literal = l.readNumber()
 			tok.Type = token.INT
 			return &tok
@@ -88,7 +87,7 @@ func (l *Lexer) NextToken() *token.Token {
 
 //改行コードや空白などでスキップするところで使うやーつ
 func (l *Lexer) skipWhiteSpace() {
-	for l.ch == ' ' || l.ch == '\n' || l.ch == '\t'{
+	for l.ch == ' ' || l.ch == '\n' || l.ch == '\t' {
 		l.readChar()
 	}
 }
