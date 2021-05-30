@@ -35,6 +35,7 @@ tools.tidy:
 ## Remove build target
 clean:
 	rm -f $(TARGETS)
+	rm -rf tmp
 
 ## Build app
 build: deps
@@ -54,7 +55,8 @@ fix: tools
 
 ## Run test
 test: deps tools
-	richgo test -v $(TEST)
+	mkdir -p tmp
+	richgo test -race -coverprofile=tmp/coverage.txt -covermode=atomic $(TEST)
 
 ## Show help
 help:
