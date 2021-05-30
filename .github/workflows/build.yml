@@ -1,0 +1,30 @@
+name: build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.16'
+      - name: build
+        run: |
+          make check
+          make build
+      - name: test
+        run: make test
+      - name: upload-coverage
+        run: bash <(curl -s https://codecov.io/bash)
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+#      - uses: actions/upload-artifact@v2
+#        with:
+#          #TODO implement 名前を外部から注入するようにしたいのと、バージョンつけて保存するようにしたい
+#          name: monkey-lang
+#          path: ./
+  test:
+    run: |
+      make test
