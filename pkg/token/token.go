@@ -28,6 +28,7 @@ const (
 	// Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
+	//CRLF = "\n" //TODO セミコロンレスでやろうとすると、こいつもトークンとして保持しないといけないのかも
 
 	LPAREN = "("
 	RPAREN = ")"
