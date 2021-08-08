@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"github.com/hideA88/monkey-lang/pkg/ast"
 	"github.com/hideA88/monkey-lang/pkg/lexer"
 	"github.com/hideA88/monkey-lang/pkg/token"
@@ -11,6 +12,8 @@ type Parser struct {
 
 	curToken  *token.Token
 	peekToken *token.Token
+
+	errors []string
 }
 
 func (p *Parser) nextToken() {
@@ -56,6 +59,7 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
 		return nil
 	}
 
+	//TODO ここで改行のところに対応する必要がある
 	for !p.curTokenIs(token.SEMICOLON) {
 		p.nextToken()
 	}
@@ -68,6 +72,7 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
 		p.nextToken()
 		return true
 	} else {
+		p.peekError(t)
 		return false
 	}
 
@@ -81,10 +86,19 @@ func (p *Parser) curTokenIs(t token.TokenType) bool {
 	return p.curToken.Type == t
 }
 
+func (p *Parser) Errors() []string {
+	return p.errors
+}
+
+func (p *Parser) peekError(t token.TokenType) {
+	msg := fmt.Sprintf("expected next token to be %s, got %s instead", t, p.peekToken.Type)
+	p.errors = append(p.errors, msg)
+}
+
 func New(l *lexer.Lexer) *Parser {
 	token := l.NextToken()
 	nextToken := l.NextToken()
-	p := &Parser{l: l, curToken: token, peekToken: nextToken}
+	p := &Parser{l: l, curToken: token, peekToken: nextToken, errors: []string{}}
 
 	return p
 }
